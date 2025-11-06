@@ -1,0 +1,9 @@
+models/ckpt/*
+*__pycache__
+.history
+.vscode
+*.png
+*.jpg
+test_*.py
+scene_desc_results*.json
+test_*.txt

@@ -1,0 +1,13 @@
+text_sector:
+  test_01:
+    data_lenth: 4
+    embed_data_name: test_01
+    embed_json_path: data/text_sector/test_01.json
+    embed_pkl_path: data/text_sector/test_01.pkl
+    time: 2025-11-06 14:02:22.053229
+  test_txt:
+    data_lenth: 18
+    embed_data_name: test_txt
+    embed_json_path: data/text_sector/test_txt.json
+    embed_pkl_path: data/text_sector/test_txt.pkl
+    time: 2025-11-06 14:02:34.695467
