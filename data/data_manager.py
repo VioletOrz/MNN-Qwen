@@ -19,9 +19,11 @@ class DataManager:
         
     def list_and_print_sectors(self):
         keys = self.index.keys()
+        res_keys = []
         for key in keys:
+            res_keys.append(key)
             print(f"Sector: {key}")
-        return keys
+        return res_keys
     
     def list_and_print_sector_and_data_names(self):
         sector_data = {}
@@ -53,6 +55,18 @@ class DataManager:
         json_data = read_json_file(json_path)
 
         return json_data
+    
+    def list_pkl_data(self, sector_name, data_name):
+        if sector_name not in self.index:
+            print(f"Sector {sector_name} not found.")
+            return None
+        if data_name not in self.index[sector_name]:
+            print(f"Data Name {data_name} not found in Sector {sector_name}.")
+            return None
+        pkl_path = self.index[sector_name][data_name]['embed_pkl_path']
+        pkl_data = read_pkl_file(pkl_path)
+
+        return pkl_data
 
     def print_json_data(self, sector_name, data_name, page_number=1, page_size=10):
         json_data = self.list_json_data(sector_name, data_name)
@@ -88,4 +102,24 @@ class DataManager:
         del self.index[sector_name]
         write_yaml_file(os.path.join(self.db_path, 'index.yaml'), self.index)
         print(f"Deleted sector: {sector_name}")
+
+    def get_merge_pkl_data(self, sector_data_name_list):
+        merged_data = {}
+        idx = 0
+        model_type = None
+        for sector_name, data_name in sector_data_name_list:
+            model_type_this = self.index[sector_name][data_name]['embedding_model_type']
+            if model_type is None:
+                model_type = model_type_this
+            elif model_type != model_type_this:
+                print(f"Error: Mismatched model types: {model_type} and {model_type_this}")
+                return None
+            pkl_data = self.list_pkl_data(sector_name, data_name)
+            if pkl_data is None:
+                continue
+            for key, value in pkl_data.items():
+                merged_data[f'{idx:06d}'] = value
+                idx += 1
+        print(f"Merged data length: {len(merged_data)}")
+        return merged_data
 

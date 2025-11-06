@@ -86,12 +86,9 @@ if __name__ == '__main__':
     # load model
     model.load()
 
-
     img_path = '1.png'
     img = cv.imread(img_path)
     img = cv.resize(img, (512, 512))
-
-    
 
     prompt = {
         'text': '历史对话:{\"role\": \"system\", \"content\": \"你叫NEWQ,是一个AI对话助手。\"} 你的名字是？',

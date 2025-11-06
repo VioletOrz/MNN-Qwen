@@ -26,22 +26,28 @@ class models\Qwen3embedding.py Qwen3Embedding
 
 .embedding_text_file_and_save_to_json_and_pkl，编码文本文件保存到json和pkl文件。输入文本文件路径，要保存的扇区名字，保存的文件名字。json文件和pkl文件会保存在db_path/sector_name/file_name.json和db_path/sector_name/file_name.pkl。其中json文件仅保存words和embedding，pkl文件保存文本和embed向量。
 
+.search_similar_texts 搜索相似文本。输入为短文本，如果是长文本需要先分割再逐段匹配，返回相似文本列表。参数 pkl_data 为 data_manager 返回的pkl数据文件。mode 为匹配模式，限制topk，限制阈值，或者all。
+
 class data/data_manager.py DataManager
 
 数据库管理，查、删。
 
 初始化参数，db_path为数据库根目录路径，index_path为数据库索引文件路径。
 
-.list_and_print_sectors 列出数据库中的扇区。
+.list_and_print_sectors 列出数据库中的扇区。返回扇区名列表。
 
-.list_and_print_sector_and_data_names 列出数据库中所有的扇区下的数据文件。
+.list_and_print_sector_and_data_names 列出数据库中所有的扇区下的数据文件。返回字典，key为扇区名，value为其下数据文件名列表。
 
-.list_and_print_data_name_in_sector 列出数据库中指定扇区下的数据文件。
+.list_and_print_data_name_in_sector 列出数据库中指定扇区下的数据文件。返回文件名列表。
 
 .list_json_data 列出数据库中指定扇区下的json数据文件。但不会打印。
+
+.list_pkl_data 同上。
 
 .print_json_data 打印数据库中指定扇区下的json数据文件。输入为扇区名称、数据文件名、页码和每页大小。
 
 .delete_data 删除数据库中指定扇区下的数据文件。输入为扇区名称、数据文件名。
 
 .delete_sector 删除数据库中指定扇区。输入为扇区名称。
+
+.get_merge_pkl_data 获取数据库中指定扇区下的数据文件并合并返回。输入为扇区名称、数据文件名。

@@ -5,6 +5,7 @@ import os
 from tools.Violet_base import *
 import time
 import datetime
+from typing import Literal
 
 # 创建并加载模型
 
@@ -31,7 +32,6 @@ class Qwen3Embedding:
         a = a / (np.linalg.norm(a) + 1e-12)
         b = b / (np.linalg.norm(b) + 1e-12)
         return float(np.dot(a, b))
-    
 
     def text_list_embeddings(self, texts):
         embeddings = []
@@ -72,11 +72,28 @@ class Qwen3Embedding:
             'embed_data_name': embed_data_name,
             'data_lenth': len(text_list),
             'time': readable_time,
+            'embedding_model_type': 'Qwen3-Embedding-0.6B-MNN',
             'embed_json_path': f'{self.db_path}/{sector_name}/{embed_data_name}.json',
             'embed_pkl_path': f'{self.db_path}/{sector_name}/{embed_data_name}.pkl',
         }
 
         write_yaml_file(os.path.join(self.db_path, self.index_path), index)
+
+    def search_similar_texts(self, query_text, pkl_data, mode: Literal["topk", "threshold", "all"] = "all", top_k=5, threshold=0.6):
+        query_emb = self.embedding_text(query_text)
+        similarity_list = []
+        for idx in pkl_data:
+            data_emb = pkl_data[idx]['embedding']
+            sim = self.cosine_similarity(query_emb, data_emb)
+            similarity_list.append((sim, pkl_data[idx]['text']))
+        similarity_list.sort(key=lambda x: x[0], reverse=True)
+
+        if mode == "topk":
+            return similarity_list[:top_k]
+        elif mode == "threshold":
+            return [s for s in similarity_list if s[0] > threshold]
+        elif mode == "all":
+            return [s for s in similarity_list[:top_k] if s[0] > threshold]
 
 
 
