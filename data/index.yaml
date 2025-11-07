@@ -1,3 +1,11 @@
+test:
+  '001':
+    data_lenth: 274
+    embed_data_name: '001'
+    embed_json_path: data/test/001.json
+    embed_pkl_path: data/test/001.pkl
+    embedding_model_type: Qwen3-Embedding-0.6B-MNN
+    time: 2025-11-07 09:38:45.467489
 text_sector:
   test_01:
     data_lenth: 4

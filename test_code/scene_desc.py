@@ -74,9 +74,9 @@ def scene_desc(image_path):
     print(clean_llm_output(response))
     return clean_llm_output(response)
 if __name__ == '__main__':
-    image_dir = r"E:\zzz_frames_cut_new_01\001\other"
+    image_dir = r"Hello_World_cn_Frames"
     path_list = os.listdir(image_dir)
-    json_path = "scene_desc_results.json"
+    json_path = "scene_desc_results_srhw.json"
     if os.path.exists(json_path):
         json_data = read_json_file(json_path)
     else:

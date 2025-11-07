@@ -7,3 +7,6 @@ models/ckpt/*
 test_*.py
 scene_desc_results*.json
 test_*.txt
+Hello_World*
+danmu_results_srhw.json
+001.txt

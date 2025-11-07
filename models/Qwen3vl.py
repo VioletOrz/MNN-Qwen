@@ -200,6 +200,7 @@ class Qwen3VL:
                 )
 
         if self.history['text'][0]['role'] == 'system': windows_size = self.history_window + 1
+        else: windows_size = self.history_window
 
         if len(self.history['text']) > windows_size:
             if self.history['text'][0]['role'] == 'system':
